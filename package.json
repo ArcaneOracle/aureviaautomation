@@ -9,8 +9,8 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build && cross-env touch dist/.nojekyll",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "npm run build && node -e \"require('fs').writeFileSync('dist/.nojekyll', '')\"",
+    "deploy": "gh-pages -d dist --dotfiles"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.13",
