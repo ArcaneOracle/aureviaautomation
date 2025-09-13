@@ -1,0 +1,16 @@
+What's the project about?
+Automating administration services.
+
+NAVBAR
+Left:
+Icon + Name: Function: Scroll back to top.
+
+Right:
+5 buttons.
+Services: Short overview of what the services are about.
+Verticals: Who is it for?
+* New name for verticals button: Tools & Platforms.
+Process: How does the process work?
+
+EXTRA ADVICE:
+Don't repeat yourself. Keep it simple.

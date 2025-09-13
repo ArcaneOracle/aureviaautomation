@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurevia Automation — Luxury AI for Service Brands</title>
+  <meta name="description" content="Aurevia builds luxury‑grade AI workflows for high‑trust service businesses. Bookings, reminders, intake, follow‑ups — done in days." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --onyx:#0B0B0C;          /* page bg */
+      --carbon:#121214;        /* alt */
+      --slate:#16171A;         /* panels */
+      --champagne:#D4AF37;     /* gold */
+      --champagne-2:#E3C565;   /* soft gold */
+      --ivory:#F4F4F2;         /* text */
+      --muted:#B7B7B7;         /* subtext */
+      --ring:rgba(212,175,55,.18);
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--onyx);color:var(--ivory);font-family:"Plus Jakarta Sans",system-ui,Segoe UI,Roboto,sans-serif}
+    .serif{font-family:"DM Serif Display",serif}
+    .gold{color:var(--champagne)}
+    .gold-bg{background:var(--champagne)}
+    .panel{background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.1);backdrop-filter:blur(10px)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:.8rem 1.2rem;border-radius:999px;font-weight:700;transition:.25s}
+    .btn-primary{background:var(--champagne);color:#0A0A0A}
+    .btn-primary:hover{filter:brightness(1.05)}
+    .btn-ghost{border:1px solid var(--champagne);color:var(--ivory)}
+    .btn-ghost:hover{background:rgba(212,175,55,.12)}
+    .glass{background:rgba(255,255,255,.05);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.12)}
+    .angle{clip-path:polygon(0 0,100% 0,100% 92%,0 100%)}
+    .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.show{opacity:1;transform:none}
+    .nav-blur{background:rgba(11,11,12,.55);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .shadow-gold{box-shadow:0 10px 40px -10px rgba(212,175,55,.22)}
+    .ring-gold{box-shadow:0 0 0 6px var(--ring)}
+    /* floating chat */
+    .float{position:fixed;right:18px;bottom:18px;z-index:40}
+    /* Mobile-friendly adjustments */
+    @media (max-width: 768px) {
+      /* Typography */
+      h1 { font-size: clamp(2rem, 8vw, 2.5rem); }
+      h2 { font-size: clamp(1.75rem, 7vw, 2rem); }
+      h3 { font-size: clamp(1.25rem, 5vw, 1.5rem); }
+      p, li, .text-sm { font-size: clamp(0.875rem, 4vw, 1rem); }
+      .text-xs { font-size: clamp(0.75rem, 3.5vw, 0.875rem); }
+      .text-4xl { font-size: clamp(1.75rem, 7vw, 2rem); }
+      .text-5xl { font-size: clamp(2rem, 8vw, 2.5rem); }
+      /* Layout adjustments */
+      .max-w-7xl, .max-w-6xl, .max-w-3xl { padding-left: 1rem; padding-right: 1rem; }
+      .pt-28 { padding-top: 6rem; }
+      .py-20 { padding-top: 4rem; padding-bottom: 4rem; }
+      .px-6 { padding-left: 1rem; padding-right: 1rem; }
+      /* Hero section */
+      header { min-height: auto; }
+      .md\\:grid-cols-2 { grid-template-columns: 1fr; }
+      .hero-grid { gap: 2rem; }
+      .hero-grid > div { text-align: center; }
+      .hero-grid .mt-7 { justify-content: center; }
+      .hero-grid .grid-cols-3 { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 0.75rem; }
+      /* Navigation */
+      #mobile { padding-left: 1rem; padding-right: 1rem; }
+      #mobile a { font-size: 1rem; padding: 0.5rem 0; }
+      .btn { padding: 0.6rem 1rem; font-size: 0.875rem; }
+      /* Services section */
+      .lg\\:col-span-5, .lg\\:col-span-7 { grid-column: span 12 / span 12; }
+      .sm\\:grid-cols-2 { grid-template-columns: 1fr; }
+      /* Verticals section */
+      .md\\:grid-cols-2 { grid-template-columns: 1fr; }
+      .grid-cols-3 { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 0.75rem; }
+      /* Process section */
+      .md\\:text-right { text-align: left; }
+      .process-grid { gap: 1.5rem; }
+      /* Results section */
+      .md\\:grid-cols-3 { grid-template-columns: 1fr; }
+      /* Demo section */
+      .lg\\:grid-cols-2 { grid-template-columns: 1fr; }
+      #log { height: 16rem; }
+      /* Pricing section */
+      .pricing-grid { grid-template-columns: 1fr; }
+      /* Contact section */
+      .md\\:col-span-2 { grid-column: span 1 / span 1; }
+      .contact-form { gap: 0.75rem; }
+      textarea { height: 6rem; }
+      /* Floating chat */
+      .float { right: 1rem; bottom: 1rem; padding: 0.6rem 1rem; font-size: 0.875rem; }
+      /* Fix hero card cutoff */
+      .angle { clip-path: polygon(0 0,100% 0,100% 100%,0 100%); }
+    }
+    @media (max-width: 480px) {
+      h1 { font-size: clamp(1.75rem, 7vw, 2rem); }
+      h2 { font-size: clamp(1.5rem, 6vw, 1.75rem); }
+      .btn { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
+      .hero-grid .grid-cols-3 { grid-template-columns: 1fr; }
+      .grid-cols-3 { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<!-- NAV -->
+  <nav id="nav" class="nav-blur fixed inset-x-0 top-0 z-40">
+    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      <a href="#top" class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-full gold-bg"></div>
+        <span class="font-extrabold tracking-wide">Navy eight <span class="gold">Automation</span></span>
+      </a>
+      <button id="menu" class="md:hidden w-10 h-10 grid place-content-center border border-white/15 rounded-lg">☰</button>
+      <div id="links" class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#services" class="text-[var(--muted)] hover:text-white">Services</a>
+        <a href="#verticals" class="text-[var(--muted)] hover:text-white">Verticals</a>
+        <a href="#process" class="text-[var(--muted)] hover:text-white">Process</a>
+        <a href="#work" class="text-[var(--muted)] hover:text-white">Results</a>
+        <a href="#contact" class="btn btn-primary">Book Demo</a>
+      </div>
+    </div>
+    <div id="mobile" class="hidden md:hidden px-6 pb-4 space-y-2">
+      <a href="#services" class="block py-2 text-[var(--muted)]">Services</a>
+      <a href="#verticals" class="block py-2 text-[var(--muted)]">Verticals</a>
+      <a href="#process" class="block py-2 text-[var(--muted)]">Process</a>
+      <a href="#work" class="block py-2 text-[var(--muted)]">Results</a>
+      <a href="#contact" class="btn btn-primary w-full">Book Demo</a>
+    </div>
+  </nav>
+
+<!-- OG -->
+<!-- HERO -->
+  <header id="top" class="relative min-h-[92vh] overflow-hidden angle flex items-center">
+    <div class="absolute inset-0 -z-10">
+      <div class="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-30" style="background:radial-gradient(circle at 30% 30%, rgba(212,175,55,.35), transparent 60%)"></div>
+      <div class="absolute bottom-[-6rem] right-[-6rem] w-[40rem] h-[40rem] rounded-full blur-3xl opacity-20" style="background:radial-gradient(circle at 70% 70%, rgba(255,255,255,.08), transparent 60%)"></div>
+      <div class="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_-10%,rgba(212,175,55,.07),transparent)]"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 pt-28 hero-grid">
+      <div class="self-center reveal">
+        <p class="uppercase tracking-[.22em] text-xs text-[var(--muted)] mb-3">Luxury‑grade AI Workflows</p>
+        <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">Automate the admin. <span class="serif gold">Elevate the brand.</span></h1>
+        <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">We deploy white‑glove AI systems that answer, book, and follow‑up like a pro assistant — with instant human handoff for sensitive matters.</p>
+        <div class="mt-7 flex flex-wrap gap-3">
+          <a href="#contact" class="btn btn-primary shadow-gold">Book Your Demo</a>
+          <a href="#demo" class="btn btn-ghost">See Interactive Demo</a>
+        </div>
+        <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+          <div class="glass rounded-xl p-3">
+            <div class="text-2xl font-extrabold gold" data-count="85">0%</div>
+            <div class="text-[10px] text-[var(--muted)]">Faster first response</div>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <div class="text-2xl font-extrabold gold" data-count="12">0</div>
+            <div class="text-[10px] text-[var(--muted)]">Hours saved / week</div>
+          </div>
+          <div class="glass rounded-xl p-3">
+            <div class="text-2xl font-extrabold gold" data-count="28">0%</div>
+            <div class="text-[10px] text-[var(--muted)]">No‑show reduction</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="panel rounded-2xl p-6 md:p-8">
+          <div class="flex items-center justify-between text-sm text-[var(--muted)] mb-4">
+            <span>Assistant Workflow — Concierge</span>
+            <span class="px-3 py-1 rounded-full border border-white/10">v2.1</span>
+          </div>
+          <ol class="space-y-3 text-sm">
+            <li class="flex gap-3"><span class="gold">◆</span> Intake via WhatsApp / Web</li>
+            <li class="flex gap-3"><span class="gold">◆</span> AI triage & smart reply</li>
+            <li class="flex gap-3"><span class="gold">◆</span> Calendar booking & confirmation</li>
+            <li class="flex gap-3"><span class="gold">◆</span> Reminder drip + recovery</li>
+            <li class="flex gap-3"><span class="gold">◆</span> Light analytics dashboard</li>
+          </ol>
+          <div class="mt-6 grid grid-cols-2 gap-3 text-xs text-[var(--muted)]">
+            <div class="glass rounded-lg p-3">POPIA‑aware setup</div>
+            <div class="glass rounded-lg p-3">WhatsApp + Email + Web</div>
+            <div class="glass rounded-lg p-3">Zero‑code handover</div>
+            <div class="glass rounded-lg p-3">Live in days</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- HERO 1 -->
+<!-- HERO: Premium AI Assistant for High-Trust Teams -->
+<header id="top" class="relative min-h-[92vh] overflow-hidden angle flex items-center">
+  <!-- Background glow / luxury feel -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-30"
+         style="background:radial-gradient(circle at 30% 30%, rgba(212,175,55,.35), transparent 60%)"></div>
+    <div class="absolute bottom-[-6rem] right-[-6rem] w-[40rem] h-[40rem] rounded-full blur-3xl opacity-20"
+         style="background:radial-gradient(circle at 70% 70%, rgba(255,255,255,.08), transparent 60%)"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_-10%,rgba(212,175,55,.07),transparent)]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 pt-28 hero-grid">
+    <!-- Left side: anchor + story -->
+    <div class="self-center reveal">
+      <!-- Premium label -->
+      <p class="uppercase tracking-[.22em] text-xs text-[var(--muted)] mb-3">
+        Luxury‑grade AI Workflows
+      </p>
+
+      <!-- Anchor / main story -->
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+        Automate the admin. <span class="serif gold">Elevate the brand.</span>
+      </h1>
+
+      <!-- Subtext: explains who it’s for & what it does -->
+      <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">
+        White‑glove AI systems that answer, book, and follow‑up like a professional assistant — 
+        with instant human handoff for sensitive matters. <br>
+        <strong>For high-trust teams that demand efficiency, precision, and brand excellence.</strong>
+      </p>
+
+      <!-- CTA buttons: elevated exclusivity -->
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#contact" class="btn btn-primary shadow-gold">
+          Schedule Your Private Demo
+        </a>
+        <a href="#demo" class="btn btn-ghost">
+          Explore the Interactive Demo
+        </a>
+      </div>
+
+      <!-- Stats grid: subtle exclusivity -->
+      <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+        <div class="glass rounded-xl p-3">
+          <div class="text-2xl font-extrabold gold" data-count="85">0%</div>
+          <div class="text-[10px] text-[var(--muted)]">Faster first replies</div>
+        </div>
+        <div class="glass rounded-xl p-3">
+          <div class="text-2xl font-extrabold gold" data-count="12">0</div>
+          <div class="text-[10px] text-[var(--muted)]">Hours saved weekly</div>
+        </div>
+        <div class="glass rounded-xl p-3">
+          <div class="text-2xl font-extrabold gold" data-count="28">0%</div>
+          <div class="text-[10px] text-[var(--muted)]">Reduced no-shows</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: workflow transparency -->
+    <div class="reveal">
+      <div class="panel rounded-2xl p-6 md:p-8">
+        <!-- Panel header -->
+        <div class="flex items-center justify-between text-sm text-[var(--muted)] mb-4">
+          <span>Assistant Workflow — Concierge</span>
+          <span class="px-3 py-1 rounded-full border border-white/10">v2.1</span>
+        </div>
+
+        <!-- Workflow steps: action-oriented, short -->
+        <ol class="space-y-3 text-sm">
+          <li class="flex gap-3"><span class="gold">◆</span> Intake via WhatsApp / Web</li>
+          <li class="flex gap-3"><span class="gold">◆</span> AI triage & instant reply</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Calendar booking & confirmation</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Reminder & recovery messages</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Analytics at a glance</li>
+        </ol>
+
+        <!-- Features grid: concise & high-trust -->
+        <div class="mt-6 grid grid-cols-2 gap-3 text-xs text-[var(--muted)]">
+          <div class="glass rounded-lg p-3">POPIA‑compliant setup</div>
+          <div class="glass rounded-lg p-3">WhatsApp, Email, Web</div>
+          <div class="glass rounded-lg p-3">Zero‑code handoff</div>
+          <div class="glass rounded-lg p-3">Live in days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- HERO 2 -->
+<!-- HERO: Premium AI Assistant for High-Trust Teams -->
+<header id="top" class="relative min-h-[92vh] overflow-hidden angle flex items-center">
+  <!-- Background glow -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute -top-24 -left-24 w-[34rem] h-[34rem] rounded-full blur-3xl opacity-25"
+         style="background:radial-gradient(circle at 30% 30%, rgba(212,175,55,.25), transparent 60%)"></div>
+    <div class="absolute bottom-[-6rem] right-[-6rem] w-[40rem] h-[40rem] rounded-full blur-3xl opacity-15"
+         style="background:radial-gradient(circle at 70% 70%, rgba(255,255,255,.05), transparent 60%)"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(1200px_600px_at_20%_-10%,rgba(212,175,55,.05),transparent)]"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 pt-28 hero-grid">
+    <!-- Left side: anchor + story -->
+    <div class="self-center reveal">
+      <p class="uppercase tracking-[.22em] text-xs text-[var(--muted)] mb-3">
+        Luxury‑grade AI Workflows
+      </p>
+
+      <h1 class="text-4xl md:text-6xl font-extrabold leading-tight">
+        Automate the admin. <span class="serif gold">Elevate the brand.</span>
+      </h1>
+
+      <p class="mt-4 text-lg text-[var(--muted)] max-w-xl">
+        White‑glove AI systems that answer, book, and follow‑up like a professional assistant — 
+        with instant human handoff for sensitive matters. <br>
+        <strong>For high-trust teams that demand efficiency, precision, and brand excellence.</strong>
+      </p>
+
+      <div class="mt-7 flex flex-wrap gap-3">
+        <a href="#contact" class="btn btn-primary shadow-[0_4px_15px_rgba(212,175,55,0.4)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.3)]">
+          Schedule Your Private Demo
+        </a>
+        <a href="#demo" class="btn btn-ghost border border-gray-600 hover:border-gold text-[var(--muted)] hover:text-gold">
+          Explore the Interactive Demo
+        </a>
+      </div>
+
+      <!-- Stats grid: subtle luxury effect -->
+      <div class="mt-6 grid grid-cols-3 gap-3 text-center">
+        <div class="glass rounded-xl p-3 bg-gray-900/40 backdrop-blur-md text-white shadow-md">
+          <div class="text-2xl font-extrabold gold" data-count="85">0%</div>
+          <div class="text-[10px] text-gray-400">Faster first replies</div>
+        </div>
+        <div class="glass rounded-xl p-3 bg-gray-900/40 backdrop-blur-md text-white shadow-md">
+          <div class="text-2xl font-extrabold gold" data-count="12">0</div>
+          <div class="text-[10px] text-gray-400">Hours saved weekly</div>
+        </div>
+        <div class="glass rounded-xl p-3 bg-gray-900/40 backdrop-blur-md text-white shadow-md">
+          <div class="text-2xl font-extrabold gold" data-count="28">0%</div>
+          <div class="text-[10px] text-gray-400">Reduced no-shows</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right side: workflow transparency -->
+    <div class="reveal">
+      <div class="panel rounded-2xl p-6 md:p-8 bg-gray-900/50 backdrop-blur-md shadow-lg">
+        <div class="flex items-center justify-between text-sm text-gray-400 mb-4">
+          <span>Assistant Workflow — Concierge</span>
+          <span class="px-3 py-1 rounded-full border border-white/10">v2.1</span>
+        </div>
+
+        <ol class="space-y-3 text-sm">
+          <li class="flex gap-3"><span class="gold">◆</span> Intake via WhatsApp / Web</li>
+          <li class="flex gap-3"><span class="gold">◆</span> AI triage & instant reply</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Calendar booking & confirmation</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Reminder & recovery messages</li>
+          <li class="flex gap-3"><span class="gold">◆</span> Analytics at a glance</li>
+        </ol>
+
+        <div class="mt-6 grid grid-cols-2 gap-3 text-xs text-gray-400">
+          <div class="glass rounded-lg p-3 bg-gray-900/30 backdrop-blur-sm">POPIA‑compliant setup</div>
+          <div class="glass rounded-lg p-3 bg-gray-900/30 backdrop-blur-sm">WhatsApp, Email, Web</div>
+          <div class="glass rounded-lg p-3 bg-gray-900/30 backdrop-blur-sm">Zero‑code handoff</div>
+          <div class="glass rounded-lg p-3 bg-gray-900/30 backdrop-blur-sm">Live in days</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+
+<!-- SERVICES (asym grid) -->
+  <section id="services" class="py-20">
+    <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-8 items-start">
+      <div class="lg:col-span-5 reveal">
+        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight">Precision <span class="serif gold">services</span> for measurable ROI</h2>
+        <p class="mt-3 text-[var(--muted)]">We deliver outcomes, not tool fatigue. Each package is battle‑tested to remove admin drag and protect your brand voice.</p>
+        <div class="mt-6 flex gap-3">
+          <a href="#contact" class="btn btn-primary">Get Pricing</a>
+          <a href="#work" class="btn btn-ghost">See Results</a>
+        </div>
+      </div>
+      <div class="lg:col-span-7 grid sm:grid-cols-2 gap-4 reveal">
+        <div class="panel rounded-2xl p-5">
+          <h3 class="font-semibold">Lead Intake & Triage</h3>
+          <p class="text-sm text-[var(--muted)] mt-1">Capture, qualify and route priority cases instantly.</p>
+        </div>
+        <div class="panel rounded-2xl p-5">
+          <h3 class="font-semibold">Bookings & Reminders</h3>
+          <p class="text-sm text-[var(--muted)] mt-1">Automated scheduling, confirmations and no‑show recovery.</p>
+        </div>
+        <div class="panel rounded-2xl p-5">
+          <h3 class="font-semibold">Smart FAQ Replies</h3>
+          <p class="text-sm text-[var(--muted)] mt-1">Polite, accurate responses 24/7 with safe human handoff.</p>
+        </div>
+        <div class="panel rounded-2xl p-5">
+          <h3 class="font-semibold">Light Analytics</h3>
+          <p class="text-sm text-[var(--muted)] mt-1">Hours saved, speed to reply, and lead conversion at a glance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- VERTICALS + TOOLS ribbon -->
+<!-- 1 -->
+  <section id="supported-tools" class="py-24 bg-[var(--carbon)]">
+    <div class="max-w-7xl mx-auto px-6">
+      <!-- Anchor & Subtext -->
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-extrabold">Built for <span class="serif gold">high-trust</span> teams</h2>
+        <p class="mt-6 text-xl md:text-2xl text-gray-300">Works seamlessly with your favorite tools.</p>
+      </div>
+
+      <!-- Tools Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 justify-items-center">
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          n8n
+        </div>
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          Make
+        </div>
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          Zapier
+        </div>
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          Google
+        </div>
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          WhatsApp
+        </div>
+        <div class="rounded-xl p-6 text-center w-full max-w-xs bg-gray-800 text-white
+                    shadow-lg shadow-black/40 transform transition duration-300
+                    hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-400/50
+                    hover:bg-gradient-to-tr hover:from-yellow-400/20 hover:to-pink-400/20">
+          Calendars
+        </div>
+      </div>
+
+      <!-- Optional CTA -->
+      <div class="text-center mt-12">
+        <p class="text-sm text-gray-400 italic">
+          And more integrations on the way.
+        </p>
+      </div>
+
+    </div>
+  </section>
+<!-- End -->
+
+
+<!-- PROCESS timeline -->
+  <section id="process" class="py-20">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-extrabold text-center mb-12">From call to <span class="serif gold">live</span> — in days</h2>
+      <div class="relative max-w-3xl mx-auto">
+        <div class="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-px bg-white/10"></div>
+        <div class="grid md:grid-cols-2 gap-10 process-grid">
+          <div class="reveal md:text-right">
+            <h3 class="font-semibold">1) Discovery</h3>
+            <p class="text-sm text-[var(--muted)]">Map bottlenecks, choose a quick‑win workflow with KPI.</p>
+          </div>
+          <div></div>
+          <div></div>
+          <div class="reveal">
+            <h3 class="font-semibold">2) Design & Build</h3>
+            <p class="text-sm text-[var(--muted)]">Connect calendars, WhatsApp/web chat and email; write responses.</p>
+          </div>
+          <div class="reveal md:text-right">
+            <h3 class="font-semibold">3) Launch & Train</h3>
+            <p class="text-sm text-[var(--muted)]">Go live with staff training + escalation rules for sensitive topics.</p>
+          </div>
+          <div></div>
+          <div></div>
+          <div class="reveal">
+            <h3 class="font-semibold">4) Measure & Optimize</h3>
+            <p class="text-sm text-[var(--muted)]">Review hours saved & response speed; iterate monthly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS / social proof style cards -->
+  <section id="work" class="py-20 bg-[var(--carbon)]">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6">
+      <div class="panel rounded-2xl p-6 reveal">
+        <div class="text-5xl font-extrabold gold" data-count="78">0%</div>
+        <p class="mt-2 text-[var(--muted)]">Faster first response</p>
+      </div>
+      <div class="panel rounded-2xl p-6 reveal">
+        <div class="text-5xl font-extrabold gold" data-count="5">0 hrs</div>
+        <p class="mt-2 text-[var(--muted)]">Admin hours saved / day</p>
+      </div>
+      <div class="panel rounded-2xl p-6 reveal">
+        <div class="text-5xl font-extrabold gold" data-count="33">0%</div>
+        <p class="mt-2 text-[var(--muted)]">No‑show reduction</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE DEMO (scripted) -->
+  <section id="demo" class="py-20">
+    <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
+      <div class="reveal">
+        <h2 class="text-3xl md:text-4xl font-extrabold">Try the <span class="serif gold">concierge</span> demo</h2>
+        <p class="mt-3 text-[var(--muted)]">A safe, scripted chat shows how we capture inquiries, book, and escalate sensitive cases to a human instantly.</p>
+        <ul class="mt-4 text-sm text-[var(--muted)] space-y-1">
+          <li>• Ask: “pricing”, “availability”</li>
+          <li>• Book: “book Friday 3pm”</li>
+          <li>• Trigger handoff: “bereavement”, “urgent legal”</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary mt-6">Book a real demo</a>
+      </div>
+      <div class="reveal">
+        <div class="panel rounded-2xl overflow-hidden">
+          <div class="px-4 py-3 border-b border-white/10 flex items-center justify-between">
+            <span class="text-sm text-[var(--muted)]">Demo Chat</span>
+            <button id="clear" class="text-xs border border-white/10 px-2 py-1 rounded">Clear</button>
+          </div>
+          <div id="log" class="h-80 overflow-y-auto p-4 space-y-3 text-sm"></div>
+          <div class="flex gap-2 p-3 border-t border-white/10 bg-white/5">
+            <input id="input" class="flex-1 bg-transparent outline-none" placeholder="Type here…" />
+            <button id="send" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING PREVIEW -->
+  <section class="py-20">
+    <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-6 pricing-grid">
+      <div class="panel rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Starter</h3>
+        <p class="text-4xl font-extrabold gold mt-1">Job-Based<span class="text-base text-[var(--muted)]"> Pricing</span></p>
+        <ul class="mt-3 text-sm text-[var(--muted)] space-y-2">
+          <li>• 1 workflow (booking or intake)</li>
+          <li>• WhatsApp + web chat</li>
+          <li>• Basic reminders</li>
+        </ul>
+      </div>
+      <div class="panel rounded-2xl p-6 border border-[var(--champagne)] reveal ring-gold">
+        <h3 class="font-semibold">Professional</h3>
+        <p class="text-4xl font-extrabold gold mt-1">Job-Based<span class="text-base text-[var(--muted)]"> Pricing</span></p>
+        <ul class="mt-3 text-sm text-[var(--muted)] space-y-2">
+          <li>• 2–3 workflows</li>
+          <li>• Reminder drips + recovery</li>
+          <li>• Light analytics</li>
+        </ul>
+      </div>
+      <div class="panel rounded-2xl p-6 reveal">
+        <h3 class="font-semibold">Enterprise</h3>
+        <p class="text-4xl font-extrabold gold mt-1">Job-Based<span class="text-base text-[var(--muted)]"> Pricing</span></p>
+        <ul class="mt-3 text-sm text-[var(--muted)] space-y-2">
+          <li>• Multi‑location</li>
+          <li>• Bespoke integrations</li>
+          <li>• SLAs & training</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-20 bg-[var(--carbon)]">
+    <div class="max-w-3xl mx-auto px-6">
+      <div class="panel rounded-2xl p-8">
+        <h2 class="text-3xl md:text-4xl font-extrabold text-center">Start in <span class="serif gold">days</span>, not months</h2>
+        <p class="text-center text-[var(--muted)] mt-2">Tell us your goals. We’ll propose a pilot workflow with clear ROI.</p>
+        <form class="mt-6 grid md:grid-cols-2 gap-4 contact-form">
+          <input placeholder="Your Name" class="bg-transparent border border-white/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--champagne)]" required>
+          <input type="email" placeholder="Email" class="bg-transparent border border-white/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--champagne)]" required>
+          <input placeholder="Company" class="bg-transparent border border-white/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--champagne)]" required>
+          <select class="bg-transparent border border-white/15 rounded-xl px-4 py-3 focus:outline-none focus:border-[var(--champagne)]">
+            <option class="bg-[var(--onyx)]">Dentists</option>
+            <option class="bg-[var(--onyx)]">Legal</option>
+            <option class="bg-[var(--onyx)]">Medical</option>
+            <option class="bg-[var(--onyx)]">Elder Care</option>
+            <option class="bg-[var(--onyx)]">Home Services</option>
+          </select>
+          <textarea placeholder="What’s the admin pain you want gone?" class="md:col-span-2 bg-transparent border border-white/15 rounded-xl px-4 py-3 h-28 focus:outline-none focus:border-[var(--champagne)]"></textarea>
+          <button class="md:col-span-2 btn btn-primary w-full">Request Proposal</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-8 text-center text-sm text-[var(--muted)]">© 2025 Aurevia Automation. All rights reserved.</footer>
+
+  <!-- FLOAT CHAT / WHATSAPP ICON (stub) -->
+  <a href="#contact" class="float btn btn-primary shadow-gold">WhatsApp Us</a>
+
+  <script>
+    // mobile nav toggle
+    const menu=document.getElementById('menu');
+    const mobile=document.getElementById('mobile');
+    if(menu){ menu.addEventListener('click',()=> mobile.classList.toggle('hidden')); }
+
+    // intersection observer for reveals
+    const obs=new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target); } });
+    },{threshold:.14});
+    document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+    // count-up animations
+    function animateCount(el){
+      const target=parseInt(el.dataset.count,10);
+      if(isNaN(target)) return;
+      let cur=0; const inc=Math.ceil(target/60);
+      const id=setInterval(()=>{ cur+=inc; if(cur>=target){ cur=target; clearInterval(id); }
+        el.textContent=el.textContent.includes('%')? cur+'%': el.textContent.includes('hrs')? cur+' hrs': el.textContent.includes('days')? cur+' days': String(cur);
+      },16);
+    }
+    document.querySelectorAll('[data-count]').forEach(animateCount);
+
+    // scripted demo chat
+    const log=document.getElementById('log');
+    const input=document.getElementById('input');
+    const send=document.getElementById('send');
+    const clearBtn=document.getElementById('clear');
+
+    function addBubble(txt,who='bot'){
+      const wrap=document.createElement('div');
+      wrap.className='flex '+(who==='bot'? 'justify-start':'justify-end');
+      const b=document.createElement('div');
+      b.className='max-w-[75%] px-3 py-2 rounded-2xl text-sm '+(who==='bot'? 'glass':'gold-bg text-black');
+      b.textContent=txt; wrap.appendChild(b); log.appendChild(wrap); log.scrollTop=log.scrollHeight;
+    }
+    function reply(q){
+      const t=q.toLowerCase();
+      if(t.includes('pricing')) return 'Pricing is tailored based on your specific job requirements. Contact us for a custom quote!';
+      if(t.includes('availability')||t.includes('open')) return 'We can deploy a pilot in 5–7 days once access is provided.';
+      if(t.includes('book')) return 'Great — I can pencil in Friday 3pm. Please confirm your email in the form below.';
+      if(t.includes('bereavement')||t.includes('urgent briefs')||t.includes('sensitive')) return 'This requires a human. I’m escalating to your team instantly — please leave your details below.';
+      return 'I can help with bookings, reminders, intake and handoffs. Ask about pricing or say “book Friday 3pm”.';
+    }
+    function sendMsg(){
+      const v=input.value.trim(); if(!v) return; addBubble(v,'you'); input.value=''; setTimeout(()=>{ addBubble(reply(v),'bot'); },350);
+    }
+    if(send){ send.addEventListener('click',sendMsg); }
+    if(input){ input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); sendMsg(); }}); }
+    if(clearBtn){ clearBtn.addEventListener('click',()=>{ log.innerHTML=''; }); }
+  </script>
+</body>
+</html>
